@@ -1,0 +1,18 @@
+# ──────────────────────────────────────────────
+# Environment: STAGING
+# ──────────────────────────────────────────────
+
+registry: ghcr.io
+repository: juanamor8/microservices-demo
+
+vote:
+  image: ghcr.io/juanamor8/microservices-demo/vote:develop
+  replicaCount: 1
+
+worker:
+  image: ghcr.io/juanamor8/microservices-demo/worker:develop
+  replicaCount: 1
+
+result:
+  image: ghcr.io/juanamor8/microservices-demo/result:develop
+  replicaCount: 1

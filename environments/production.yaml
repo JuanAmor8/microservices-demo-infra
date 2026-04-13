@@ -1,0 +1,18 @@
+# ──────────────────────────────────────────────
+# Environment: PRODUCTION
+# ──────────────────────────────────────────────
+
+registry: ghcr.io
+repository: juanamor8/microservices-demo
+
+vote:
+  image: ghcr.io/juanamor8/microservices-demo/vote:latest
+  replicaCount: 2
+
+worker:
+  image: ghcr.io/juanamor8/microservices-demo/worker:latest
+  replicaCount: 2
+
+result:
+  image: ghcr.io/juanamor8/microservices-demo/result:latest
+  replicaCount: 2
