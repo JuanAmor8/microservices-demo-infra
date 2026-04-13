@@ -78,9 +78,11 @@ jobs:
 
       - name: Dry-run template render (production values)
         run: |
-          helm template vote charts/vote/ \
-            --set image=$(cat environments/production.yaml | grep 'vote:' | awk '{print $2}') \
-            --debug > /dev/null
+          VOTE_IMAGE=$(grep -A2 '^vote:' environments/production.yaml | grep 'image:' | awk '{print $2}')
+          helm template vote charts/vote/ --set "image=${VOTE_IMAGE}" --debug > /dev/null
+          helm template worker charts/worker/ --debug > /dev/null
+          helm template result charts/result/ --debug > /dev/null
+          helm template infrastructure charts/infrastructure/ --debug > /dev/null
           echo "All charts rendered successfully"
 
   # ── Stage 2: Deploy to Staging ────────────────────────────────────────────
@@ -158,7 +160,7 @@ jobs:
     needs: helm-lint
     runs-on: ubuntu-latest
     if: |
-      github.ref == 'refs/heads/main' ||
+      (github.ref == 'refs/heads/main' && github.event_name == 'push') ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
     environment: production   # requiere aprobación manual en GitHub
 
